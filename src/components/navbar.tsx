@@ -8,7 +8,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <div>
             <h1 className="text-2xl font-bold text-[#3d6b4f] leading-none">
-              Purple Hibiscus
+              Blue Hibiscus
             </h1>
           </div>
         </div>

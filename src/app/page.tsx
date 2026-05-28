@@ -91,10 +91,10 @@ export default function Home() {
           {/* RIGHT */}
           <div>
             <h2 className="text-3xl font-bold font-serif leading-tight mb-4 text-[#3d6b4f]">
-              About Purple Hibiscus
+              About Blue Hibiscus
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-6">
-              Purple Hibiscus is a simple, natural wellness guide designed for people over 50 who want better sleep, more energy, and everyday comfort using easy kitchen ingredients and herbal combinations.
+              Blue Hibiscus is a simple, natural wellness guide designed for people over 50 who want better sleep, more energy, and everyday comfort using easy kitchen ingredients and herbal combinations.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
               No complicated routines. Just clear, step-by-step methods that help your body respond naturally and consistently over time.
@@ -148,7 +148,7 @@ export default function Home() {
       {/* Brand */}
       <div className="max-w-xs">
         <h3 className="text-lg font-serif font-bold text-white mb-2">
-          Purple Hibiscus
+          Blue Hibiscus
         </h3>
         <p className="text-sm text-gray-400 leading-relaxed">
           Natural wellness guides for adults over 50. Simple ingredients, real results.
