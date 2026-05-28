@@ -126,6 +126,96 @@ const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
+
+      {/* COMPARISON */}
+<section className="bg-white py-24">
+  <div className="max-w-5xl mx-auto px-6">
+    <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
+      Why It Works
+    </p>
+    <h2 className="text-4xl font-bold font-serif text-center mb-14">
+      Why This Works When Everything Else Doesn't
+    </h2>
+
+    <div className="grid md:grid-cols-2 gap-6 mb-12">
+
+      {/* Card 1 - The Book */}
+      <div className="bg-[#f0f7f2] border border-[#c5dbc9] rounded-2xl p-8 flex flex-col">
+        <div className="w-12 h-12 rounded-xl bg-[#3d6b4f] flex items-center justify-center mb-5">
+          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253" />
+          </svg>
+        </div>
+        <h3 className="text-lg font-bold font-serif text-[#3d6b4f] mb-5">
+          The Natural Healing Handbook
+        </h3>
+        <ul className="flex flex-col gap-3 flex-1">
+          {[
+            "Uses the right combinations (not guesswork)",
+            "Step-by-step system you can follow",
+            "Works with ingredients you already have",
+            "Targets the root, not just symptoms",
+            "No pills, no stacking side effects",
+            "Built for real, everyday problems",
+          ].map((item, i) => (
+            <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
+              <span className="mt-0.5 w-5 h-5 rounded-full bg-[#3d6b4f] flex items-center justify-center shrink-0">
+                <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Card 2 - The Alternative */}
+      <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 flex flex-col">
+        <div className="w-12 h-12 rounded-xl bg-gray-300 flex items-center justify-center mb-5">
+          <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 className="text-lg font-bold font-serif text-gray-900 mb-5">
+          Pills, Supplements & Guesswork
+        </h3>
+        <ul className="flex flex-col gap-3 flex-1">
+          {[
+            "One ingredient at a time",
+            "Conflicting advice everywhere",
+            "Expensive products that don't fix anything",
+            "Temporary relief, then it comes back",
+            "One pill leads to another",
+            "No clear system, just trial and error",
+          ].map((item, i) => (
+            <li key={i} className="flex items-start gap-3 text-sm text-gray-900">
+              <span className="mt-0.5 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+
+    {/* CTA */}
+    <div className="text-center">
+      
+     
+      <a href="#" className="inline-block bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">   
+
+        Send Me My Copy Now
+      </a>
+    </div>
+
+  </div>
+</section>
+
       {/* TESTIMONIALS */}
       <section className="bg-[#f8f6ef] py-24">
         <div className="max-w-7xl mx-auto px-6">
