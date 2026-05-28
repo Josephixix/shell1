@@ -128,7 +128,7 @@ const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
 
 
       {/* COMPARISON */}
-<section className="bg-white py-24">
+<section className="bg-[#f8f6ef] py-24">
   <div className="max-w-5xl mx-auto px-6">
     <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
       Why It Works
@@ -217,7 +217,7 @@ const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
 </section>
 
       {/* TESTIMONIALS */}
-      <section className="bg-[#f8f6ef] py-24">
+      <section className="bg-white py-24">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
             Real Stories
