@@ -56,15 +56,36 @@ const testimonials = [
 
 export default function Home() {
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  if (email) {
-    setSubmitted(true);
-    setEmail("");
-  }
-};
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus("loading");
+
+    try {
+      // Sending data directly to ConvertKit's public form endpoint
+      const response = await fetch("https://app.kit.com/forms/6643915/subscriptions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          email_address: email,
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      setStatus("error");
+    }
+  };
 
   return (
     <main className="bg-[#f8f6ef] text-[#1f2937] overflow-hidden">
@@ -119,102 +140,95 @@ const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
             <p className="text-lg text-gray-600 leading-relaxed">
               No complicated routines. Just clear, step-by-step methods that help your body respond naturally and consistently over time.
             </p>
-               <button className="bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium mt-4 px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">
+            <button className="bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium mt-4 px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">
               Make Purchase
             </button>
           </div>
         </div>
       </section>
 
-
       {/* COMPARISON */}
-<section className="bg-[#f8f6ef] py-24">
-  <div className="max-w-5xl mx-auto px-6">
-    <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
-      Why It Works
-    </p>
-    <h2 className="text-4xl font-bold font-serif text-center mb-14">
-      Why This Works When Everything Else Doesn't
-    </h2>
+      <section className="bg-[#f8f6ef] py-24">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
+            Why It Works
+          </p>
+          <h2 className="text-4xl font-bold font-serif text-center mb-14">
+            Why This Works When Everything Else Doesn't
+          </h2>
 
-    <div className="grid md:grid-cols-2 gap-6 mb-12">
-
-      {/* Card 1 - The Book */}
-      <div className="bg-[#f0f7f2] border border-[#c5dbc9] rounded-2xl p-8 flex flex-col">
-        <div className="w-12 h-12 rounded-xl bg-[#3d6b4f] flex items-center justify-center mb-5">
-          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253" />
-          </svg>
-        </div>
-        <h3 className="text-lg font-bold font-serif text-[#3d6b4f] mb-5">
-          The Natural Healing Handbook
-        </h3>
-        <ul className="flex flex-col gap-3 flex-1">
-          {[
-            "Uses the right combinations (not guesswork)",
-            "Step-by-step system you can follow",
-            "Works with ingredients you already have",
-            "Targets the root, not just symptoms",
-            "No pills, no stacking side effects",
-            "Built for real, everyday problems",
-          ].map((item, i) => (
-            <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
-              <span className="mt-0.5 w-5 h-5 rounded-full bg-[#3d6b4f] flex items-center justify-center shrink-0">
-                <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            {/* Card 1 - The Book */}
+            <div className="bg-[#f0f7f2] border border-[#c5dbc9] rounded-2xl p-8 flex flex-col">
+              <div className="w-12 h-12 rounded-xl bg-[#3d6b4f] flex items-center justify-center mb-5">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253" />
                 </svg>
-              </span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+              </div>
+              <h3 className="text-lg font-bold font-serif text-[#3d6b4f] mb-5">
+                The Natural Healing Handbook
+              </h3>
+              <ul className="flex flex-col gap-3 flex-1">
+                {[
+                  "Uses the right combinations (not guesswork)",
+                  "Step-by-step system you can follow",
+                  "Works with ingredients you already have",
+                  "Targets the root, not just symptoms",
+                  "No pills, no stacking side effects",
+                  "Built for real, everyday problems",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
+                    <span className="mt-0.5 w-5 h-5 rounded-full bg-[#3d6b4f] flex items-center justify-center shrink-0">
+                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-      {/* Card 2 - The Alternative */}
-      <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 flex flex-col">
-        <div className="w-12 h-12 rounded-xl bg-gray-300 flex items-center justify-center mb-5">
-          <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <h3 className="text-lg font-bold font-serif text-gray-900 mb-5">
-          Pills, Supplements & Guesswork
-        </h3>
-        <ul className="flex flex-col gap-3 flex-1">
-          {[
-            "One ingredient at a time",
-            "Conflicting advice everywhere",
-            "Expensive products that don't fix anything",
-            "Temporary relief, then it comes back",
-            "One pill leads to another",
-            "No clear system, just trial and error",
-          ].map((item, i) => (
-            <li key={i} className="flex items-start gap-3 text-sm text-gray-900">
-              <span className="mt-0.5 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
-                <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            {/* Card 2 - The Alternative */}
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 flex flex-col">
+              <div className="w-12 h-12 rounded-xl bg-gray-300 flex items-center justify-center mb-5">
+                <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-              </span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+              </div>
+              <h3 className="text-lg font-bold font-serif text-gray-900 mb-5">
+                Pills, Supplements & Guesswork
+              </h3>
+              <ul className="flex flex-col gap-3 flex-1">
+                {[
+                  "One ingredient at a time",
+                  "Conflicting advice everywhere",
+                  "Expensive products that don't fix anything",
+                  "Temporary relief, then it comes back",
+                  "One pill leads to another",
+                  "No clear system, just trial and error",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-900">
+                    <span className="mt-0.5 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                      <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-    </div>
-
-    {/* CTA */}
-    <div className="text-center">
-      
-     
-      <a href="#" className="inline-block bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">   
-
-        Send Me My Copy Now
-      </a>
-    </div>
-
-  </div>
-</section>
+          {/* CTA */}
+          <div className="text-center">
+            <a href="#" className="inline-block bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">  
+              Send Me My Copy Now
+            </a>
+          </div>
+        </div>
+      </section>
 
       {/* TESTIMONIALS */}
       <section className="bg-white py-24">
@@ -231,11 +245,7 @@ const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
 
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="bg-white border border-gray-100 rounded-2xl p-8 flex flex-col gap-4"
-              >
-                {/* Stars */}
+              <div key={i} className="bg-white border border-gray-100 rounded-2xl p-8 flex flex-col gap-4">
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, s) => (
                     <svg key={s} className="w-4 h-4 text-[#3d6b4f] fill-[#3d6b4f]" viewBox="0 0 20 20">
@@ -254,7 +264,7 @@ const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
         </div>
       </section>
 
-      {/* EMAIL SIGNUP */}
+      {/* EMAIL SIGNUP - FULLY EMBEDDED NATIVE TAILWIND FORM */}
       <section className="bg-[#3d6b4f]">
         <div className="max-w-2xl mx-auto px-6 py-24 text-center">
           <p className="text-xs uppercase tracking-widest text-[#a8c5b0] font-medium mb-3">
@@ -267,29 +277,48 @@ const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
             Join our community of readers over 50. We share simple remedies, seasonal routines, and gentle advice — no spam, just good guidance.
           </p>
 
-          {submitted ? (
-            <div className="bg-white/10 border border-white/20 rounded-2xl px-8 py-6">
-              <p className="text-white font-semibold text-lg">You're on the list!</p>
-              <p className="text-[#c5dbc9] text-sm mt-1">Thank you for joining. Check your inbox for a welcome note.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
-                className="flex-1 px-5 py-3 rounded-full bg-white text-gray-800 text-sm placeholder-gray-400 outline-none focus:ring-2 focus:ring-white/50"
-              />
-              <button
-                type="submit"
-                className="bg-[#1a2a1f] text-white text-sm font-medium px-7 py-3 rounded-full hover:bg-black transition-colors whitespace-nowrap"
-              >
-                Subscribe
-              </button>
-            </form>
-          )}
+          <div className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md text-left">
+            {status === "success" ? (
+              <div className="text-center py-4">
+                <span className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-3 text-green-600 font-bold text-xl">✓</span>
+                <p className="text-base font-medium text-gray-900">Success! Check your inbox.</p>
+                <p className="text-sm text-gray-500 mt-1">Please confirm your email subscription to get started.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="space-y-4">
+                <div>
+                  <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    disabled={status === "loading"}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="e.g. margaret@example.com"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#3d6b4f] text-gray-900 placeholder-gray-400 disabled:bg-gray-50 transition-all text-sm"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="w-full bg-[#3d6b4f] hover:bg-[#2e5040] text-white font-medium text-sm py-3 px-4 rounded-xl transition-colors disabled:bg-gray-400"
+                >
+                  {status === "loading" ? "Subscribing..." : "Subscribe"}
+                </button>
+
+                {status === "error" && (
+                  <p className="text-xs text-red-500 mt-2 text-center font-medium">
+                    Oops! Something went wrong. Please try again.
+                  </p>
+                )}
+              </form>
+            )}
+          </div>
+
         </div>
       </section>
 
