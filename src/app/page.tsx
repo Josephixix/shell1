@@ -1,65 +1,177 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const faqs = [
+  {
+    question: "When Will I Receive My Book?",
+    answer:
+      "Your digital copy is delivered instantly to your email right after purchase. No waiting, no shipping — just immediate access on any device.",
+  },
+  {
+    question: "Is This Book Easy to Follow?",
+    answer:
+      "Absolutely. Every remedy and routine is written in plain language with simple steps. No medical background needed — if you can make tea, you can follow this book.",
+  },
+  {
+    question: "Do I Need Special Ingredients?",
+    answer:
+      "No. Everything in this book uses everyday ingredients — garlic, ginger, lemon, turmeric — found at any grocery store. Nothing exotic, nothing expensive.",
+  },
+  {
+    question: "Is This Suitable For My Age?",
+    answer:
+      "Yes. This book was written specifically for adults over 60. Every recommendation accounts for how the body changes with age and what actually works at this stage of life.",
+  },
+  {
+    question: "What If It Doesn't Work For Me?",
+    answer:
+      "You're covered by a 60-day 'Feel the Difference' guarantee. If you don't notice a real improvement, just reach out for a full refund — no questions asked.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="bg-[#f8f6ef] text-[#1f2937] overflow-hidden">
+
+      {/* HERO */}
+      <section className="max-w-7xl mx-auto px-6 pt-10 md:py-20 grid lg:grid-cols-2 gap-12 items-center">
+
+        {/* LEFT */}
+        <div className="flex flex-col justify-start lg:justify-center md:mt-0">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-serif">
+            Sleep Better{" "}
+            <em className="italic text-[#3d6b4f]">Naturally</em>{" "}
+            After 60
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg text-gray-600 leading-relaxed mb-8">
+            A simple handbook with sleep routines, foods, drinks, and remedies
+            designed for seniors. No pills, no prescriptions, just rest that works.
           </p>
+          <div className="flex items-center gap-4 flex-wrap">
+            <button className="bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">
+              Make Purchase
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+        {/* RIGHT */}
+        <div className="flex justify-center items-center lg:justify-end">
+          <img
+            src="/hero.png"
+            alt="Senior sleeping peacefully"
+            className="w-full max-w-md rounded-2xl object-cover"
+          />
+        </div>
+
+      </section>
+
+      {/* ABOUT */}
+      <section className="bg-white">
+        <div className="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-16 items-center">
+
+          {/* LEFT */}
+          <div>
+            <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium mb-4">
+              About the Book
+            </p>
+            <img
+              src="/image2.png"
+              alt="Natural herbs and remedies"
+              className="w-full rounded-2xl object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+
+          {/* RIGHT */}
+          <div>
+            <h2 className="text-3xl font-bold font-serif leading-tight mb-4 text-[#3d6b4f]">
+              About Purple Hibiscus
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed mb-6">
+              Purple Hibiscus is a simple, natural wellness guide designed for people over 50 who want better sleep, more energy, and everyday comfort using easy kitchen ingredients and herbal combinations.
+            </p>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              No complicated routines. Just clear, step-by-step methods that help your body respond naturally and consistently over time.
+            </p>
+          </div>
+
         </div>
-      </main>
+      </section>
+
+      {/* FAQ */}
+      <section className="bg-[#f8f6ef] py-24">
+        <div className="max-w-3xl mx-auto px-6">
+
+          <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
+            FAQ
+          </p>
+          <h2 className="text-4xl font-bold font-serif text-center mb-2">
+            Still Have Questions?
+          </h2>
+          <p className="text-sm text-gray-400 text-center mb-12">
+            Everything you need to know before getting started.
+          </p>
+
+          <Accordion type="single" collapsible className="space-y-3">
+            {faqs.map((faq, i) => (
+              <AccordionItem
+                key={i}
+                value={`item-${i}`}
+                className="border border-gray-200 rounded-2xl px-6 bg-white data-[state=open]:bg-white transition-colors"
+              >
+                <AccordionTrigger className="text-base font-semibold text-gray-900 hover:no-underline py-5">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-gray-500 leading-relaxed pb-5">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+
+        </div>
+      </section>
+
+    {/* FOOTER */}
+<footer className="bg-[#1a2a1f] text-white py-16">
+  <div className="max-w-6xl mx-auto px-6">
+
+    {/* Top */}
+    <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
+
+      {/* Brand */}
+      <div className="max-w-xs">
+        <h3 className="text-lg font-serif font-bold text-white mb-2">
+          Purple Hibiscus
+        </h3>
+        <p className="text-sm text-gray-400 leading-relaxed">
+          Natural wellness guides for adults over 50. Simple ingredients, real results.
+        </p>
+      </div>
+
+      
+
     </div>
+
+    {/* Divider */}
+    <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p className="text-xs text-gray-500">
+        © 2026 GreenHaven Press. All Rights Reserved.
+      </p>
+      <p className="text-xs text-gray-600">
+        Made with care for natural living.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+    </main>
   );
 }
