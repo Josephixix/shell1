@@ -14,9 +14,18 @@ export default function Navbar() {
         </div>
 
         {/* CTA BUTTON */}
-        <button className="hidden md:block bg-black transition text-white px-6 py-2 rounded-2xl hover:bg-gray-50 font-semibold hover:text-black">
-          Order Now
-        </button>
+       <a
+  href="https://thebluehibiscus.gumroad.com/l/jqfsdj"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <button
+    className="hidden md:block bg-[#3d6b4f] transition
+    text-white px-6 py-2 rounded-2xl hover:bg-[#2e5040] font-semibold"
+  >
+    Order Now
+  </button>
+</a>
       </div>
     </nav>
   );

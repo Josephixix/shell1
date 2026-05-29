@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -17,22 +19,22 @@ const faqs = [
   {
     question: "Is This Book Easy to Follow?",
     answer:
-      "Absolutely. Every remedy and routine is written in plain language with simple steps. No medical background needed — if you can make tea, you can follow this book.",
+      "Absolutely. Every remedy and routine is explained in simple language with step-by-step guidance. No medical knowledge needed.",
   },
   {
     question: "Do I Need Special Ingredients?",
     answer:
-      "No. Everything in this book uses everyday ingredients — garlic, ginger, lemon, turmeric — found at any grocery store. Nothing exotic, nothing expensive.",
+      "No. Most remedies use simple herbs and ingredients that are affordable and easy to find in grocery stores or local markets.",
   },
   {
-    question: "Is This Suitable For My Age?",
+    question: "Who Is This Book For?",
     answer:
-      "Yes. This book was written specifically for adults over 60. Every recommendation accounts for how the body changes with age and what actually works at this stage of life.",
+      "This book is designed for anyone struggling with poor sleep, restless nights, stress, or low energy — regardless of age.",
   },
   {
     question: "What If It Doesn't Work For Me?",
     answer:
-      "You're covered by a 60-day 'Feel the Difference' guarantee. If you don't notice a real improvement, just reach out for a full refund — no questions asked.",
+      "You're covered by a 60-day satisfaction guarantee. If you're not happy with your experience, simply reach out for a full refund.",
   },
 ];
 
@@ -45,7 +47,7 @@ const testimonials = [
   {
     name: "Robert K., 72",
     location: "Austin, TX",
-    text: "Simple, practical, and it actually works. I was skeptical at first, but the routines are so easy to follow. My wife noticed the difference before I did — I'm calmer and more rested.",
+    text: "Simple, practical, and it actually works. I was skeptical at first, but the routines are so easy to follow. My wife noticed the difference before I did, I'm calmer and more rested.",
   },
   {
     name: "Dolores M., 64",
@@ -54,6 +56,23 @@ const testimonials = [
   },
 ];
 
+function FadeInSection({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 32 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -61,28 +80,20 @@ export default function Home() {
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-
     setStatus("loading");
-
     try {
-      // Sending data directly to ConvertKit's public form endpoint
       const response = await fetch("https://app.kit.com/forms/6643915/subscriptions", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          email_address: email,
-        }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ email_address: email }),
       });
-
       if (response.ok) {
         setStatus("success");
         setEmail("");
       } else {
         setStatus("error");
       }
-    } catch (err) {
+    } catch {
       setStatus("error");
     }
   };
@@ -93,159 +104,228 @@ export default function Home() {
       {/* HERO */}
       <section className="max-w-7xl mx-auto px-6 pt-10 md:py-20 grid lg:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col justify-start lg:justify-center md:mt-0">
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-serif">
-            Sleep Better{" "}
-            <em className="italic text-[#3d6b4f]">Naturally</em>{" "}
-            After 60
-          </h1>
-          <p className="text-lg text-gray-600 leading-relaxed mb-8">
+          <motion.h1
+            className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-serif"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            Herbal secret to a{" "}
+            <em className="italic text-[#3d6b4f]">good night rest</em>{" "}
+          </motion.h1>
+          <motion.p
+            className="text-lg text-gray-600 leading-relaxed mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+          >
             A simple handbook with sleep routines, foods, drinks, and remedies
-            designed for seniors. No pills, no prescriptions, just rest that works.
-          </p>
-          <div className="flex items-center gap-4 flex-wrap">
-            <button className="bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">
-              Make Purchase
-            </button>
-          </div>
+            designed to fix sleep deprivation. No pills, no prescriptions, just rest that works.
+          </motion.p>
+          <motion.div
+            className="flex items-center gap-4 flex-wrap"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <a href="https://thebluehibiscus.gumroad.com/l/jqfsdj" target="_blank" rel="noopener noreferrer">
+              <motion.button
+                className="bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full"
+                whileHover={{ scale: 1.04, backgroundColor: "#2e5040" }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.2 }}
+              >
+                Make Purchase
+              </motion.button>
+            </a>
+          </motion.div>
         </div>
-        <div className="flex justify-center items-center lg:justify-end">
+        <motion.div
+          className="flex justify-center items-center lg:justify-end"
+          initial={{ opacity: 0, scale: 0.95, x: 40 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+        >
           <img
-            src="/hero.png"
+            src="/p3.jpeg"
             alt="Senior sleeping peacefully"
             className="w-full max-w-md rounded-2xl object-cover"
           />
-        </div>
+        </motion.div>
       </section>
 
       {/* ABOUT */}
       <section className="bg-white">
         <div className="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-16 items-center">
-          <div>
+          <FadeInSection>
             <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium mb-4">
               About the Book
             </p>
             <img
-              src="/image2.png"
+              src="/p4.jpeg"
               alt="Natural herbs and remedies"
               className="w-full rounded-2xl object-cover"
             />
-          </div>
-          <div>
+          </FadeInSection>
+          <FadeInSection delay={0.15}>
             <h2 className="text-3xl font-bold font-serif leading-tight mb-4 text-[#3d6b4f]">
               About Blue Hibiscus
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-6">
-              Blue Hibiscus is a simple, natural wellness guide designed for people over 50 who want better sleep, more energy, and everyday comfort using easy kitchen ingredients and herbal combinations.
+              Blue Hibiscus believes deep, natural sleep should never come from dependency on pills or harsh chemicals. Our mission is to help people restore healthy rest using gentle herbal remedies, proven sleep rituals, and timeless natural practices.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
-              No complicated routines. Just clear, step-by-step methods that help your body respond naturally and consistently over time.
+              Inside, you'll discover simple herbal solutions, sleep-supporting routines, and practical techniques designed to help you wake up refreshed, focused, and energized. The way nature intended.
             </p>
-            <button className="bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium mt-4 px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">
-              Make Purchase
-            </button>
-          </div>
+            <a href="https://thebluehibiscus.gumroad.com/l/jqfsdj" target="_blank" rel="noopener noreferrer">
+              <motion.button
+                className="bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium mt-4 px-7 py-3 rounded-full"
+                whileHover={{ scale: 1.04, backgroundColor: "#2e5040" }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.2 }}
+              >
+                Make Purchase
+              </motion.button>
+            </a>
+          </FadeInSection>
         </div>
       </section>
 
       {/* COMPARISON */}
       <section className="bg-[#f8f6ef] py-24">
         <div className="max-w-5xl mx-auto px-6">
-          <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
-            Why It Works
-          </p>
-          <h2 className="text-4xl font-bold font-serif text-center mb-14">
-            Why This Works When Everything Else Doesn't
-          </h2>
+          <FadeInSection>
+            <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
+              Why It Works
+            </p>
+            <h2 className="text-4xl font-bold font-serif text-center mb-14">
+              Why This Works When Everything Else Doesn't
+            </h2>
+          </FadeInSection>
 
           <div className="grid md:grid-cols-2 gap-6 mb-12">
-            {/* Card 1 - The Book */}
-            <div className="bg-[#f0f7f2] border border-[#c5dbc9] rounded-2xl p-8 flex flex-col">
-              <div className="w-12 h-12 rounded-xl bg-[#3d6b4f] flex items-center justify-center mb-5">
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253" />
-                </svg>
+            <FadeInSection delay={0.1}>
+              <div className="bg-[#f0f7f2] border border-[#c5dbc9] rounded-2xl p-8 flex flex-col h-full">
+                <div className="w-12 h-12 rounded-xl bg-[#3d6b4f] flex items-center justify-center mb-5">
+                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold font-serif text-[#3d6b4f] mb-5">
+                  Blue Hibiscus: Natural Sleep Solutions
+                </h3>
+                <ul className="flex flex-col gap-3 flex-1">
+                  {[
+                    "Uses the right combinations (not guesswork)",
+                    "Step-by-step system you can follow",
+                    "Works with ingredients you already have",
+                    "Targets the root, not just symptoms",
+                    "No pills, no stacking side effects",
+                    "Built for real, everyday problems",
+                  ].map((item, i) => (
+                    <motion.li
+                      key={i}
+                      className="flex items-start gap-3 text-sm text-gray-700"
+                      initial={{ opacity: 0, x: -16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.07 }}
+                    >
+                      <span className="mt-0.5 w-5 h-5 rounded-full bg-[#3d6b4f] flex items-center justify-center shrink-0">
+                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                      {item}
+                    </motion.li>
+                  ))}
+                </ul>
               </div>
-              <h3 className="text-lg font-bold font-serif text-[#3d6b4f] mb-5">
-                The Natural Healing Handbook
-              </h3>
-              <ul className="flex flex-col gap-3 flex-1">
-                {[
-                  "Uses the right combinations (not guesswork)",
-                  "Step-by-step system you can follow",
-                  "Works with ingredients you already have",
-                  "Targets the root, not just symptoms",
-                  "No pills, no stacking side effects",
-                  "Built for real, everyday problems",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
-                    <span className="mt-0.5 w-5 h-5 rounded-full bg-[#3d6b4f] flex items-center justify-center shrink-0">
-                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </FadeInSection>
 
-            {/* Card 2 - The Alternative */}
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 flex flex-col">
-              <div className="w-12 h-12 rounded-xl bg-gray-300 flex items-center justify-center mb-5">
-                <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+            <FadeInSection delay={0.2}>
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 flex flex-col h-full">
+                <div className="w-12 h-12 rounded-xl bg-gray-300 flex items-center justify-center mb-5">
+                  <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold font-serif text-gray-900 mb-5">
+                  Pills, Supplements & Guesswork
+                </h3>
+                <ul className="flex flex-col gap-3 flex-1">
+                  {[
+                    "One ingredient at a time",
+                    "Conflicting advice everywhere",
+                    "Expensive products that don't fix anything",
+                    "Temporary relief, then it comes back",
+                    "One pill leads to another",
+                    "No clear system, just trial and error",
+                  ].map((item, i) => (
+                    <motion.li
+                      key={i}
+                      className="flex items-start gap-3 text-sm text-gray-900"
+                      initial={{ opacity: 0, x: 16 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.07 }}
+                    >
+                      <span className="mt-0.5 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                        <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </span>
+                      {item}
+                    </motion.li>
+                  ))}
+                </ul>
               </div>
-              <h3 className="text-lg font-bold font-serif text-gray-900 mb-5">
-                Pills, Supplements & Guesswork
-              </h3>
-              <ul className="flex flex-col gap-3 flex-1">
-                {[
-                  "One ingredient at a time",
-                  "Conflicting advice everywhere",
-                  "Expensive products that don't fix anything",
-                  "Temporary relief, then it comes back",
-                  "One pill leads to another",
-                  "No clear system, just trial and error",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-gray-900">
-                    <span className="mt-0.5 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
-                      <svg className="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </FadeInSection>
           </div>
 
-          {/* CTA */}
-          <div className="text-center">
-            <a href="#" className="inline-block bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full hover:bg-[#2e5040] transition-colors">  
-              Send Me My Copy Now
-            </a>
-          </div>
+          <FadeInSection delay={0.1}>
+            <div className="text-center">
+              <a href="https://thebluehibiscus.gumroad.com/l/jqfsdj" target="_blank" rel="noopener noreferrer">
+                <motion.span
+                  className="inline-block bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full cursor-pointer"
+                  whileHover={{ scale: 1.04, backgroundColor: "#2e5040" }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  Send Me My Copy Now
+                </motion.span>
+              </a>
+            </div>
+          </FadeInSection>
         </div>
       </section>
 
       {/* TESTIMONIALS */}
       <section className="bg-white py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
-            Real Stories
-          </p>
-          <h2 className="text-4xl font-bold font-serif text-center mb-2">
-            What Readers Are Saying
-          </h2>
-          <p className="text-sm text-gray-400 text-center mb-14">
-            From people just like you who made the switch to natural rest.
-          </p>
+          <FadeInSection>
+            <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
+              Real Stories
+            </p>
+            <h2 className="text-4xl font-bold font-serif text-center mb-2">
+              What Readers Are Saying
+            </h2>
+            <p className="text-sm text-gray-400 text-center mb-14">
+              From people just like you who made the switch to natural rest.
+            </p>
+          </FadeInSection>
 
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
-              <div key={i} className="bg-white border border-gray-100 rounded-2xl p-8 flex flex-col gap-4">
+              <motion.div
+                key={i}
+                className="bg-white border border-gray-100 rounded-2xl p-8 flex flex-col gap-4"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+                whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(0,0,0,0.08)" }}
+              >
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, s) => (
                     <svg key={s} className="w-4 h-4 text-[#3d6b4f] fill-[#3d6b4f]" viewBox="0 0 20 20">
@@ -258,97 +338,119 @@ export default function Home() {
                   <p className="text-sm font-semibold text-gray-900">{t.name}</p>
                   <p className="text-xs text-gray-400">{t.location}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* EMAIL SIGNUP - FULLY EMBEDDED NATIVE TAILWIND FORM */}
+      {/* EMAIL SIGNUP */}
       <section className="bg-[#3d6b4f]">
         <div className="max-w-2xl mx-auto px-6 py-24 text-center">
-          <p className="text-xs uppercase tracking-widest text-[#a8c5b0] font-medium mb-3">
-            Stay in the Loop
-          </p>
-          <h2 className="text-4xl font-bold font-serif text-white mb-4">
-            Get Natural Wellness Tips in Your Inbox
-          </h2>
-          <p className="text-[#c5dbc9] text-base leading-relaxed mb-10">
-            Join our community of readers over 50. We share simple remedies, seasonal routines, and gentle advice — no spam, just good guidance.
-          </p>
+          <FadeInSection>
+            <p className="text-xs uppercase tracking-widest text-[#a8c5b0] font-medium mb-3">
+              Stay in the Loop
+            </p>
+            <h2 className="text-4xl font-bold font-serif text-white mb-4">
+              Get Natural Wellness Tips in Your Inbox
+            </h2>
+            <p className="text-[#c5dbc9] text-base leading-relaxed mb-10">
+              Join our community of readers over 50. We share simple remedies, seasonal routines, and gentle advice, no spam, just good guidance.
+            </p>
+          </FadeInSection>
 
-          <div className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md text-left">
-            {status === "success" ? (
-              <div className="text-center py-4">
-                <span className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-3 text-green-600 font-bold text-xl">✓</span>
-                <p className="text-base font-medium text-gray-900">Success! Check your inbox.</p>
-                <p className="text-sm text-gray-500 mt-1">Please confirm your email subscription to get started.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="space-y-4">
-                <div>
-                  <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    disabled={status === "loading"}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. margaret@example.com"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#3d6b4f] text-gray-900 placeholder-gray-400 disabled:bg-gray-50 transition-all text-sm"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="w-full bg-[#3d6b4f] hover:bg-[#2e5040] text-white font-medium text-sm py-3 px-4 rounded-xl transition-colors disabled:bg-gray-400"
+          <FadeInSection delay={0.15}>
+            <div className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md text-left">
+              {status === "success" ? (
+                <motion.div
+                  className="text-center py-4"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
                 >
-                  {status === "loading" ? "Subscribing..." : "Subscribe"}
-                </button>
-
-                {status === "error" && (
-                  <p className="text-xs text-red-500 mt-2 text-center font-medium">
-                    Oops! Something went wrong. Please try again.
-                  </p>
-                )}
-              </form>
-            )}
-          </div>
-
+                  <span className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-3 text-green-600 font-bold text-xl">✓</span>
+                  <p className="text-base font-medium text-gray-900">Success! Check your inbox.</p>
+                  <p className="text-sm text-gray-500 mt-1">Please confirm your email subscription to get started.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubscribe} className="space-y-4">
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
+                      Email Address
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      required
+                      disabled={status === "loading"}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="e.g. margaret@example.com"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#3d6b4f] text-gray-900 placeholder-gray-400 disabled:bg-gray-50 transition-all text-sm"
+                    />
+                  </div>
+                  <motion.button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="w-full bg-[#3d6b4f] hover:bg-[#2e5040] text-white font-medium text-sm py-3 px-4 rounded-xl transition-colors disabled:bg-gray-400"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    {status === "loading" ? "Subscribing..." : "Subscribe"}
+                  </motion.button>
+                  {status === "error" && (
+                    <motion.p
+                      className="text-xs text-red-500 mt-2 text-center font-medium"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      Oops! Something went wrong. Please try again.
+                    </motion.p>
+                  )}
+                </form>
+              )}
+            </div>
+          </FadeInSection>
         </div>
       </section>
 
       {/* FAQ */}
       <section className="bg-[#f8f6ef] py-24">
         <div className="max-w-3xl mx-auto px-6">
-          <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
-            FAQ
-          </p>
-          <h2 className="text-4xl font-bold font-serif text-center mb-2">
-            Still Have Questions?
-          </h2>
-          <p className="text-sm text-gray-400 text-center mb-12">
-            Everything you need to know before getting started.
-          </p>
+          <FadeInSection>
+            <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
+              FAQ
+            </p>
+            <h2 className="text-4xl font-bold font-serif text-center mb-2">
+              Still Have Questions?
+            </h2>
+            <p className="text-sm text-gray-400 text-center mb-12">
+              Everything you need to know before getting started.
+            </p>
+          </FadeInSection>
 
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, i) => (
-              <AccordionItem
+              <motion.div
                 key={i}
-                value={`item-${i}`}
-                className="border border-gray-200 rounded-2xl px-6 bg-white data-[state=open]:bg-white transition-colors"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
               >
-                <AccordionTrigger className="text-base font-semibold text-gray-900 hover:no-underline py-5">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm text-gray-500 leading-relaxed pb-5">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+                <AccordionItem
+                  value={`item-${i}`}
+                  className="border border-gray-200 rounded-2xl px-6 bg-white data-[state=open]:bg-white transition-colors"
+                >
+                  <AccordionTrigger className="text-base font-semibold text-gray-900 hover:no-underline py-5">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-gray-500 leading-relaxed pb-5">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </div>
@@ -358,22 +460,32 @@ export default function Home() {
       <footer className="bg-[#1a2a1f] text-white py-16">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
-            <div className="max-w-xs">
-              <h3 className="text-lg font-serif font-bold text-white mb-2">
-                Blue Hibiscus
-              </h3>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                Natural wellness guides for adults over 50. Simple ingredients, real results.
-              </p>
-            </div>
+            <FadeInSection>
+              <div className="max-w-xs">
+                <h3 className="text-lg font-serif font-bold text-white mb-2">Blue Hibiscus</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Natural wellness guides for all ages. Simple ingredients, real results.
+                </p>
+              </div>
+            </FadeInSection>
+            <FadeInSection delay={0.1}>
+              <div className="text-center">
+                <a href="https://thebluehibiscus.gumroad.com/l/jqfsdj" target="_blank" rel="noopener noreferrer">
+                  <motion.span
+                    className="inline-block bg-[#3d6b4f] text-[#f8f6ef] text-sm font-medium px-7 py-3 rounded-full cursor-pointer"
+                    whileHover={{ scale: 1.04, backgroundColor: "#2e5040" }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Send Me My Copy Now
+                  </motion.span>
+                </a>
+              </div>
+            </FadeInSection>
           </div>
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-gray-500">
-              © 2026 GreenHaven Press. All Rights Reserved.
-            </p>
-            <p className="text-xs text-gray-600">
-              Made with care for natural living.
-            </p>
+            <p className="text-xs text-gray-500">© 2026 Blue Hibiscus. All Rights Reserved.</p>
+            <p className="text-xs text-gray-600">Made with care for natural living.</p>
           </div>
         </div>
       </footer>
