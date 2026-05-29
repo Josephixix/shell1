@@ -7,7 +7,7 @@ export default function Navbar() {
         {/* LOGO */}
         <div className="flex items-center gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-[#3d6b4f] leading-none">
+            <h1 className="text-2xl font-bold text-[#3d6b4f] leading-none font-serif">
               Blue Hibiscus
             </h1>
           </div>
