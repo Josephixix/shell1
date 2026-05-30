@@ -98,8 +98,9 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            A simple handbook with sleep routines, foods, drinks, and remedies
-            designed to fix sleep deprivation. No pills, no prescriptions, just rest that works.
+        A guide that restores your carcadian rhythm naturally, without
+         the chemical hangover through a variety of handpicked ancient herbal remedies that has stood 
+         the test of time.
           </motion.p>
           <motion.div
             className="flex items-center gap-4 flex-wrap"
@@ -151,10 +152,10 @@ export default function Home() {
               About Blue Hibiscus
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-6">
-              Blue Hibiscus believes deep, natural sleep should never come from dependency on pills or harsh chemicals. Our mission is to help people restore healthy rest using gentle herbal remedies, proven sleep rituals, and timeless natural practices.
+       Green health is real wealth, that is why at Blue Hibiscus we offer you the best solutions to everyday ailments and health concerns.  Our guides consist of a collection of carefully selected herbs, herbal remedies, curated routines and a whole lot more providing you with healthy alternatives to pills and prescriptions that causes drug dependency.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
-              Inside, you'll discover simple herbal solutions, sleep-supporting routines, and practical techniques designed to help you wake up refreshed, focused, and energized. The way nature intended.
+            Why swallow those bitter tablets when you could enjoy a fragrant hot cup of home brewed tea.
             </p>
             <a href="https://thebluehibiscus.gumroad.com/l/jqfsdj" target="_blank" rel="noopener noreferrer">
               <motion.button
