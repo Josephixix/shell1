@@ -128,7 +128,7 @@ export default function Home() {
         >
           <img
             src="/p3.jpeg"
-            alt="Senior sleeping peacefully"
+            alt="hero image"
             className="w-full max-w-md rounded-2xl object-cover"
           />
         </motion.div>
