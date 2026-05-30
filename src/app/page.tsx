@@ -289,7 +289,7 @@ export default function Home() {
             <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
               Real Stories
             </p>
-            <h2 className="text-4xl font-bold font-serif text-center mb-2">
+            <h2 className="text-2xl font-bold font-serif text-center mb-2">
               What Readers Are Saying
             </h2>
             <p className="text-sm text-gray-400 text-center mb-14">
@@ -347,7 +347,7 @@ export default function Home() {
             <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
               FAQ
             </p>
-            <h2 className="text-4xl font-bold font-serif text-center mb-2">
+            <h2 className="text-2xl font-bold font-serif text-center mb-2">
               Still Have Questions?
             </h2>
             <p className="text-sm text-gray-400 text-center mb-12">
