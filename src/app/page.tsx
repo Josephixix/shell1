@@ -1,3 +1,4 @@
+"use server";
 import Script from "next/script";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
@@ -8,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { u } from "motion/react-client";
+import { server } from "shadcn/mcp";
 
 const faqs = [
   {
