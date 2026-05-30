@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import Script from "next/script";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import {
@@ -74,39 +74,11 @@ function FadeInSection({ children, delay = 0, className = "" }: { children: Reac
 }
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setStatus("loading");
-    try {
-      const response = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        // ConvertKit returns a subscription object on success
-        if (data.subscription) {
-          setStatus("success");
-          setEmail("");
-        } else {
-          setStatus("error");
-        }
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
-  };
-
   return (
     <main className="bg-[#f8f6ef] text-[#1f2937] overflow-hidden">
+
+      {/* ConvertKit script — loads once for the inline form below */}
+      <Script src="https://f.convertkit.com/ckjs/ck.5.js" strategy="afterInteractive" />
 
       {/* HERO */}
       <section className="max-w-7xl mx-auto px-6 pt-10 md:py-20 grid lg:grid-cols-2 gap-12 items-center">
@@ -351,76 +323,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EMAIL SIGNUP */}
-      <section className="bg-[#3d6b4f]">
-        <div className="max-w-2xl mx-auto px-6 py-24 text-center">
-          <FadeInSection>
-            <p className="text-xs uppercase tracking-widest text-[#a8c5b0] font-medium mb-3">
-              Stay in the Loop
-            </p>
-            <h2 className="text-4xl font-bold font-serif text-white mb-4">
-              Get Natural Wellness Tips in Your Inbox
-            </h2>
-            <p className="text-[#c5dbc9] text-base leading-relaxed mb-10">
-              Join our community of readers. We share simple remedies, seasonal routines, and gentle advice, no spam, just good guidance.
-            </p>
-          </FadeInSection>
-
-          <FadeInSection delay={0.15}>
-            <div className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md text-left">
-              {status === "success" ? (
-                <motion.div
-                  className="text-center py-4"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <span className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-3 text-green-600 font-bold text-xl">✓</span>
-                  <p className="text-base font-medium text-gray-900">Success! Check your inbox.</p>
-                  <p className="text-sm text-gray-500 mt-1">Please confirm your email subscription to get started.</p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="space-y-4">
-                  <div>
-                    <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      required
-                      disabled={status === "loading"}
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="e.g. margaret@example.com"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#3d6b4f] text-gray-900 placeholder-gray-400 disabled:bg-gray-50 transition-all text-sm"
-                    />
-                  </div>
-                  <motion.button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className="w-full bg-[#3d6b4f] hover:bg-[#2e5040] text-white font-medium text-sm py-3 px-4 rounded-xl transition-colors disabled:bg-gray-400"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    {status === "loading" ? "Subscribing..." : "Subscribe"}
-                  </motion.button>
-                  {status === "error" && (
-                    <motion.p
-                      className="text-xs text-red-500 mt-2 text-center font-medium"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                    >
-                      Oops! Something went wrong. Please try again.
-                    </motion.p>
-                  )}
-                </form>
-              )}
-            </div>
-          </FadeInSection>
-        </div>
-      </section>
+{/* NEWSLETTER — ConvertKit inline form */}
+<section className="bg-[#3d6b4f] py-24 border-t border-gray-100">
+  <div className="max-w-2xl mx-auto px-6">
+    <FadeInSection>
+  
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `<script async data-uid="e49b84b9cd" src="https://jjay-3.kit.com/e49b84b9cd/index.js"></script>`,
+        }}
+      />
+    </FadeInSection>
+  </div>
+</section>
 
       {/* FAQ */}
       <section className="bg-[#f8f6ef] py-24">
