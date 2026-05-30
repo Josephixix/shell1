@@ -1,3 +1,5 @@
+"use client";
+
 import Script from "next/script";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
@@ -7,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { u } from "motion/react-client";
 
 const faqs = [
   {

@@ -24,7 +24,10 @@ export const metadata: Metadata = {
   title: "Blue Hibiscus",
   description: "Herbal secret to a good night rest",
 };
-
+<meta
+  name="blue hibiscus"
+  content="Natural sleep remedies, herbal drinks, and wellness guides designed to help seniors sleep better naturally."
+/>
 export default function RootLayout({
   children,
 }: Readonly<{
