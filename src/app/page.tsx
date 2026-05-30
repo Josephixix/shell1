@@ -330,7 +330,7 @@ export default function Home() {
   
       <div
         dangerouslySetInnerHTML={{
-          __html: `<script async data-uid="2844642a05" src="https://jjay-3.kit.com/2844642a05/index.js"></script>`,
+          __html: `<script async data-uid="5be4437952" src="https://blue-hibiscus.kit.com/5be4437952/index.js"></script>`,
         }}
       />
     </FadeInSection>
