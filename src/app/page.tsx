@@ -150,7 +150,7 @@ export default function Home() {
             />
           </FadeInSection>
           <FadeInSection delay={0.15}>
-            <h2 className="text-3xl font-bold font-serif leading-tight mb-4 text-[#3d6b4f]">
+            <h2 className="text-2xl font-bold font-serif leading-tight mb-4 text-[#3d6b4f]">
               About Blue Hibiscus
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-6">
