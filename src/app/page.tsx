@@ -82,14 +82,21 @@ export default function Home() {
     if (!email) return;
     setStatus("loading");
     try {
-      const response = await fetch("https://app.kit.com/forms/6643915/subscriptions", {
+      const response = await fetch("/api/subscribe", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ email_address: email }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
       });
+
       if (response.ok) {
-        setStatus("success");
-        setEmail("");
+        const data = await response.json();
+        // ConvertKit returns a subscription object on success
+        if (data.subscription) {
+          setStatus("success");
+          setEmail("");
+        } else {
+          setStatus("error");
+        }
       } else {
         setStatus("error");
       }
@@ -355,7 +362,7 @@ export default function Home() {
               Get Natural Wellness Tips in Your Inbox
             </h2>
             <p className="text-[#c5dbc9] text-base leading-relaxed mb-10">
-              Join our community of readers over 50. We share simple remedies, seasonal routines, and gentle advice, no spam, just good guidance.
+              Join our community of readers. We share simple remedies, seasonal routines, and gentle advice, no spam, just good guidance.
             </p>
           </FadeInSection>
 
