@@ -1,5 +1,3 @@
-"use client";
-
 import Script from "next/script";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
