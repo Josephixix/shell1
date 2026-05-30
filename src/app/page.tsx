@@ -74,6 +74,12 @@ function FadeInSection({ children, delay = 0, className = "" }: { children: Reac
   );
 }
 
+export const metadata = {
+  title: "Blue Hibiscus",
+  description:
+    "Sleep better naturally with herbal remedies, calming routines, and wellness guides designed for better rest and relaxation.",
+};
+
 export default function Home() {
   return (
     <main className="bg-[#f8f6ef] text-[#1f2937] overflow-hidden">
