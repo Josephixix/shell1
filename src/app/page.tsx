@@ -178,7 +178,7 @@ export default function Home() {
             <p className="text-xs uppercase tracking-widest text-[#3d6b4f] font-medium text-center mb-3">
               Why It Works
             </p>
-            <h2 className="text-4xl font-bold font-serif text-center mb-14">
+            <h2 className="text-2xl font-bold font-serif text-center mb-14">
               Why This Works When Everything Else Doesn't
             </h2>
           </FadeInSection>
