@@ -198,12 +198,13 @@ export default function Home() {
                 </h3>
                 <ul className="flex flex-col gap-3 flex-1">
                   {[
-                    "Uses the right combinations (not guesswork)",
-                    "Step-by-step system you can follow",
-                    "Works with ingredients you already have",
-                    "Targets the root, not just symptoms",
-                    "No pills, no stacking side effects",
-                    "Built for real, everyday problems",
+                    "No complicated routines, no expensive lab synthesized supplements",
+                    "Backed by traditional medicine and modern science",
+                    "Unlike pills, herbs work with your body,not against it",
+                    "Carefully reserched and designed for home use",
+                    "step-by-step guid on how to prepare herbal remedies in your kitchen",
+                    "Realistic routine and life style change that makes a real difference",
+                    "feel refreshed, energized, and ready to shine",
                   ].map((item, i) => (
                     <motion.li
                       key={i}
