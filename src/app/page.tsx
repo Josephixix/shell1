@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { u } from "motion/react-client";
 import { server } from "shadcn/mcp";
+import Navbar from "@/components/navbar";
 
 const faqs = [
   {
@@ -78,7 +79,7 @@ function FadeInSection({ children, delay = 0, className = "" }: { children: Reac
 export default function Home() {
   return (
     <main className="bg-[#f8f6ef] text-[#1f2937] overflow-hidden">
-
+<Navbar />
       {/* ConvertKit script — loads once for the inline form below */}
       <Script src="https://f.convertkit.com/ckjs/ck.5.js" strategy="afterInteractive" />
 
