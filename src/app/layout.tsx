@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono,DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 
 const dmSans = DM_Sans({
@@ -36,6 +37,8 @@ export default function RootLayout({
      className={`${dmSans.variable} antialiased`}
     > 
       <body className="min-h-full flex flex-col">{children}</body>
+
+      <GoogleAnalytics gaId="G-GS0WZHFR28" />
     </html>
   );
 }
