@@ -92,8 +92,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            Herbal secret to a{" "}
-            <em className="italic text-[#3d6b4f]">good night rest</em>{" "}
+          Herbal Remedies For Deep,{" "}
+            <em className="italic text-[#3d6b4f]">Restful Sleep</em>{" "}
           </motion.h1>
           <motion.p
             className="text-lg text-gray-600 leading-relaxed mb-8"
@@ -130,7 +130,7 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <img
-            src="/p3.jpeg"
+            src="/hero2.png"
             alt="hero image"
             className="w-full max-w-md rounded-2xl object-cover"
           />
@@ -145,7 +145,7 @@ export default function Home() {
               About the Book
             </p>
             <img
-              src="/p4.jpeg"
+              src="/hero3.png"
               alt="Natural herbs and remedies"
               className="w-full rounded-2xl object-cover"
             />
